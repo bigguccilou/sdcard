@@ -89,17 +89,6 @@ if test -r "${BOOTDIR}/firstboot"; then
 fi
 
 if !(grep -q FAT_CHECK\=\0 "${HOME}/options.cfg"); then
-##Check if fat32 is flagged as "dirty", and if so unmount, repair, remount
-if dmesg | grep "mmcblk0p4" > /dev/null;  then
-echo -e "\e[31mUnclean shutdown detected.\e[0m"
-echo -e "\e[32mChecking FAT32 partition...\e[0m"
-umount /dev/mmcblk0p4
-fsck.vfat -y /dev/mmcblk0p4 > /dev/null; 
-mount /dev/mmcblk0p4 "${HOME}" -t vfat -o rw,sync,utf8
-echo -e "\e[32mCheck complete.\e[0m"
-fi
-fi
-
 clear
 
 echo "Boot!" >> "${LOGS}"
